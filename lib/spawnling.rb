@@ -100,8 +100,11 @@ class Spawnling
       options[:method].call(proc { yield })
     elsif options[:method] == :thread
       # for versions before 2.2, check for allow_concurrency
-     if RAILS_2_2 || ActiveRecord::Base.respond_to?(:allow_concurrency) ?
-          ActiveRecord::Base.allow_concurrency :  Rails.application.config.allow_concurrency
+      #FIXME: The allow concurrency setting is not working in this syntax in Rails 3.2
+      # Need to find alternative syntax and fix this comment accordingly.
+      # Temporary patch.
+     if true #RAILS_2_2 || ActiveRecord::Base.respond_to?(:allow_concurrency) ?
+          #ActiveRecord::Base.allow_concurrency :  Rails.application.config.allow_concurrency
        @type = :thread
        @handle = thread_it(options) { yield }
       else
